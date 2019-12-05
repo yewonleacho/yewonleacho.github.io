@@ -7,26 +7,25 @@ var next;
 
 function preload(){
 	god = loadImage("resources/god.png");
-	life = loadImage("resources/ife.png");
+	life = loadImage("resources/life.png");
 	tom = loadImage("resources/tom.png");
 	donna = loadImage("resources/donna.png");
 	pizza = loadImage("resources/pizza.png");
 	skull = loadImage("resources/poison.png");
 
-	soundFormats('mp3');
-	themeSong = loadSound("resources/parksandrectheme.mp3");
-	soundEffect = loadSound("resources/treatyoself.mp3");
+	// themeSong = loadSound("resources/parksandrectheme.mp3");
+	// soundEffect = loadSound("resources/treatyoself.mp3");
 	
-	pixelFont = loadFont('resources/Endless_Boss_Battle.ttf');
+	// pixelFont = loadFont('resources/Endless_Boss_Battle.ttf');
 }
 
 function setup(){
 	createCanvas(windowWidth, windowHeight);
 	background(194, 217, 252);
 	
-	themeSong.setVolume(0.8);
-	themeSong.play();
-	themeSong.loop();
+	// themeSong.setVolume(0.8);
+	// themeSong.play();
+	// themeSong.loop();
 	
 	playerCharacter = new Player(500, 300);
 }
@@ -38,10 +37,10 @@ function draw(){
 	}
 }
 
-function mouseClicked(){
-	soundEffect.setVolume(0.8);
-	soundEffect.play();
-}
+// function mouseClicked(){
+// 	soundEffect.setVolume(0.8);
+// 	soundEffect.play();
+// }
 
 function keyPressed() {
 	if (key == "s"){ next = true; }
@@ -67,7 +66,7 @@ function keyMovements() {
 
 /////////////// MENU Screen ///////////////
 function menuScreen(){
-	textFont(pixelFont);
+	// textFont(pixelFont);
 	textSize(100);
 	fill(39, 112, 230);
 	text("THE SHIN ADVENTURE", windowWidth / 4, windowHeight / 3);
@@ -82,8 +81,16 @@ function gameScreen(){
 	background(194, 217, 252);
 	image(god, windowWidth / 2, 10);
 	playerCharacter.display();
-	
+
+	// pizzas.push(new Pizza());
+
+ //  // loop through snowflakes with a for..of loop
+ //  	for (let slice of pizzas) {
+ //    	slice.update(); // update snowflake position
+ //    	slice.display(); // draw snowflake
+ //  }
 }
+
 
 /////////////// PLAYER Class /////////////////
 let Player = function(startX, startY) {
@@ -118,3 +125,25 @@ Player.prototype.move = function(xMove, yMove) {
 	if (this.position.y < 0) { this.position.y = 0; }
 	if (this.position.y > height) { this.position.y = height; }
 }
+
+
+// /////////////// PIZZA Class /////////////////
+// let pizzas = [];
+// let Pizza = function() {
+// 	this.posX = random(-50, 1000);
+// 	this.posY = 0;
+
+// 	this.update = function() {
+// 		this.posY += 10;
+
+// 		if (this.posY > height){
+// 			let index = pizzas.indexOf(this);
+// 			pizzas.splice(index, 1);
+// 		}
+// 	}
+
+// 	this.display = function() {
+// 		image(pizza, this.posX, this.posY);
+// 	}
+// }
+
