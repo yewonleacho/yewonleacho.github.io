@@ -41,7 +41,7 @@ function preload() {
 	earnScore = loadSound("resources/treatyoself.mp3");
 	loseScore = loadSound("resources/moneyplease.mp3");
 	
-	pixelFont = loadFont("resources/Endless_Boss_Battle.ttf");
+	// pixelFont = loadFont("resources/Endless_Boss_Battle.ttf");
 
 }
 
