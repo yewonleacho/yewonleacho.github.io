@@ -47,8 +47,8 @@ function preload() {
 function setup() {
 	createCanvas(800, 800);
 
-	// themeSong.setVolume(0.2);
-	// themeSong.loop();
+	themeSong.setVolume(0.2);
+	themeSong.loop();
 
 	scl = 50;
 	player = new Player(300, 750, scl, 5);
@@ -94,6 +94,7 @@ function setup() {
 /* Input */
 function keyPressed() {
 	keys[keyCode] = true;
+
 	if (key == "P" || key == "p"){
 		themeSong.setVolume(0.2);
 		themeSong.loop();
@@ -144,6 +145,7 @@ function overlay() {
 /* Scenes */
 function menu() {
 	image(background, 0, 0, 800, 800);
+	
 	fill(39, 112, 230);
 
 	textSize(15);
