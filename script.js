@@ -13,7 +13,7 @@ let obstacleTypes = [];
 let obstacles = [];
 let effect = [];
 
-let level, ground, groundTime;
+let level, background, background1, background2;
 var god, life, donna, pizza, skull, tom, bomb;
 let dissappearSpeed, appearSpeed;
 let fr, interval, counter;
@@ -34,8 +34,9 @@ function preload() {
 	skull = loadImage("resources/poison.png");
 	bomb = loadImage("resources/bomb.png");
 
-	ground = loadImage("resources/background.png");
-	groundTime = loadImage("resources/red.png");
+	background = loadImage("resources/background.jpg");
+	background1 = loadImage("resources/background1.png");
+	background2 = loadImage("resources/background2.png");
 
 	themeSong = loadSound("resources/parksandrectheme.mp3");
 	earnScore = loadSound("resources/treatyoself.mp3");
@@ -46,11 +47,12 @@ function preload() {
 function setup() {
 	createCanvas(800, 800);
 
-	themeSong.setVolume(0.2);
-	themeSong.loop();
+	// themeSong.setVolume(0.2);
+	// themeSong.loop();
 
 	scl = 50;
 	player = new Player(300, 750, scl, 5);
+	flyingGod = new God(width / 2, 50, 80, 3);
 
 	opacity = 0;
 	opacityIncrement = 10;
@@ -83,7 +85,7 @@ function setup() {
 
 	scene = "menu";
 
-	background(0, 0, 0, 0);
+	// background(0, 0, 0, 0);
 
 	angleMode(DEGREES);
 	textAlign(CENTER, CENTER);
@@ -92,6 +94,10 @@ function setup() {
 /* Input */
 function keyPressed() {
 	keys[keyCode] = true;
+	if (key == "P" || key == "p"){
+		themeSong.setVolume(0.2);
+		themeSong.loop();
+	}
 	if (key == "S" || key == "s"){
 		scene = "game";
 	}
@@ -137,10 +143,13 @@ function overlay() {
 
 /* Scenes */
 function menu() {
-	image(ground, 0, 0);
+	image(background, 0, 0, 800, 800);
+	fill(39, 112, 230);
+
+	textSize(15);
+	text("Press 'P' to play background music.", 125, 30);
 
 	textSize(50);
-	fill(39, 112, 230);
 	text("THE SHIN ADVENTURE", width / 2, height / 3);
 	text("(1987, Atari)", width / 2, height * 0.4);
 	
@@ -153,7 +162,7 @@ function menu() {
 }
 
 function help(){
-	image(ground, 0, 0);
+	image(background, 0, 0, 800, 800);
 
 	fill(39, 112, 230);
 	textSize(15);
@@ -177,7 +186,7 @@ function help(){
 }
 
 function gameOver() {
-	image(ground, 0, 0);
+	image(background, 0, 0, 800, 800);
 
 	fill(39, 112, 230);
 	textSize(15);
@@ -199,7 +208,10 @@ function gameOver() {
 }
 
 function game() {
-	image(ground, 0, 0);
+	image(background1, 0, 0, 800, 800);
+
+	flyingGod.draw();
+	flyingGod.update();
 
 	for (let i = obstacles.length - 1; i >= 0; i --) {
 		let o = obstacles[i];
@@ -282,7 +294,7 @@ function game() {
 }
 
 function timeAttack(){
-	image(groundTime, 0, 0);
+	image(background2, 0, 0, 800, 800);
 	
 	/// Subtract the time we STARTED the timer from our current clock time.
 	var timeElapsed = millis() - timerBeginTime;
@@ -331,6 +343,9 @@ function timeAttack(){
 			obstacles.splice(i, 1);
 		}
 	}
+
+	flyingGod.draw();
+	flyingGod.update();
 
 	player.draw();
 	player.update();
