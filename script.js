@@ -46,7 +46,8 @@ function preload() {
 function setup() {
 	createCanvas(800, 800);
 
-	themeSong.play();
+	themeSong.setVolume(0.2);
+	themeSong.loop();
 
 	scl = 50;
 	player = new Player(300, 750, scl, 5);
@@ -62,7 +63,7 @@ function setup() {
 
 	/* Obstacle Types */
 	// img, [x], [y], [s], speed, type
-	obstacleTypes.push([pizza, 5, "treat"]);
+	obstacleTypes.push([pizza, 5, "treat"]);	
 	obstacleTypes.push([skull, 5, "poison"]);
 
 	/* Obstacles */
@@ -91,23 +92,23 @@ function setup() {
 /* Input */
 function keyPressed() {
 	keys[keyCode] = true;
-	if (key == "S"){
+	if (key == "S" || key == "s"){
 		scene = "game";
 	}
-	if (key == "H"){
+	if (key == "H" || key == "h"){
 		scene = "help";
 	}
-	if (key == "Q"){
+	if (key == "Q" || key == "q"){
 		scene = "menu";
 	}
-	if (key == "T"){
+	if (key == "T" || key == "t"){
 		scene = "time attack";
 		timerIsRunning = true;
 		
 		/// Set our "begin time" to the current clock time
 		timerBeginTime = millis();
 		/// We will have a 10 second timer
-		timeSetToTimer = 10000;
+		timeSetToTimer = 100000;
 		/// Create our actual Timeout timer
 		endingTimer = setTimeout(endTimer, timeSetToTimer);
 	}
@@ -138,10 +139,10 @@ function overlay() {
 function menu() {
 	image(ground, 0, 0);
 
-	textSize(20);
+	textSize(50);
 	fill(39, 112, 230);
 	text("THE SHIN ADVENTURE", width / 2, height / 3);
-	text("(1987, Atari)", width / 2, height * 0.36);
+	text("(1987, Atari)", width / 2, height * 0.4);
 	
 	textSize(20);
 	text("Press 'H' to see the help menu.", width / 2, height * 0.8);
@@ -214,6 +215,7 @@ function game() {
 			}
 			else if (o.type == "poison"){
 				player.health--;	
+				loseScore.setVolume(0.1);
 				loseScore.play();
 			}
 			obstacles.splice(i, 1);
@@ -315,9 +317,12 @@ function timeAttack(){
 			if (o.type == "treat"){
 				score += 10;
 				effect.push([1, o.x, o.y, true]);
+				earnScore.play();
 			}
 			else if (o.type == "poison"){
-				score -= 15;	
+				score -= 15;
+				loseScore.setVolume(0.1);
+				loseScore.play();	
 			}
 			obstacles.splice(i, 1);
 		}
