@@ -37,7 +37,7 @@ Player.prototype.collide = function(obj) {
 
 Player.prototype.draw = function() {
 	imageMode(CENTER);
-	image(playerImg, this.x, this.y, this.s, this.s);
+	image(playerImg, this.x, this.y, this.s, 100);
 	imageMode(CORNER);
 };
 

@@ -183,7 +183,7 @@ function help(){
 
 	text("In time attack mode, you have 100 seconds to play game.", width / 2, height * 0.6);
 	text("Instead of losing life, your score will be taken off ", width / 2, height * 0.65);
-	text("by 10 points if you touch the deadly potion.", width / 2, height * 0.7);
+	text("by 15 points if you touch the deadly potion.", width / 2, height * 0.7);
 
 	textSize(55);
 	fill(253, 163, 208);
