@@ -17,7 +17,7 @@ let level, background, background1, background2;
 var god, life, donna, pizza, skull, tom, bomb;
 let dissappearSpeed, appearSpeed;
 let fr, interval, counter;
-let score, levels;
+let numTreat, score, levels;
 
 var endingTimer;
 var timerBeginTime;
@@ -42,6 +42,7 @@ function preload() {
 	earnScore = loadSound("resources/treatyoself.mp3");
 	loseScore = loadSound("resources/moneyplease.mp3");
 
+ 	pixelFont = loadFont("resources/Endless Boss Battle.ttf");
 }
 
 function setup() {
@@ -61,6 +62,8 @@ function setup() {
 	appearSpeed = 70;
 
 	levels = 1;
+
+	numTreat = 0;
 
 
 	/* Obstacle Types */
@@ -115,11 +118,12 @@ function keyPressed() {
 		/// Set our "begin time" to the current clock time
 		timerBeginTime = millis();
 		/// We will have a 10 second timer
-		timeSetToTimer = 100000;
+		timeSetToTimer = 60000;
 		/// Create our actual Timeout timer
 		endingTimer = setTimeout(endTimer, timeSetToTimer);
 	}
 }
+
 function keyReleased() {
 	keys[keyCode] = false;
 }
@@ -135,7 +139,6 @@ function spawnObstacles(ammount) {
 }
 
 
-
 function overlay() {
 	fill(255, 255, 255, opacity);
 	noStroke();
@@ -145,17 +148,19 @@ function overlay() {
 /* Scenes */
 function menu() {
 	image(background, 0, 0, 800, 800);
-	
+
+	textFont(pixelFont);
+
 	fill(39, 112, 230);
 
 	textSize(15);
-	text("Press 'P' to play background music.", 125, 30);
+	text("Press 'P' to play background music.", 140, 30);
 
-	textSize(50);
+	textSize(60);
 	text("THE SHIN ADVENTURE", width / 2, height / 3);
-	text("(1987, Atari)", width / 2, height * 0.4);
+	text("(1987, Atari)", width / 2, height * 0.42);
 	
-	textSize(20);
+	textSize(25);
 	text("Press 'H' to see the help menu.", width / 2, height * 0.8);
 	text("Press 'S' to play Regular Game mode.", width / 2, height * 0.85);
 	text("Press 'T' to play Time Attack mode.", width / 2, height * 0.9);
@@ -168,7 +173,7 @@ function help(){
 
 	fill(39, 112, 230);
 	textSize(15);
-	text("Press 'Q' to go back to Main Menu.", 125, 30);
+	text("Press 'Q' to go back to Main Menu.", 140, 30);
 
 	textSize(20);
 	text("In regular game mode, if you touch deadly potion, you lose one life.", width / 2, height * 0.3);
@@ -180,7 +185,7 @@ function help(){
 	text("Instead of losing life, your score will be taken off ", width / 2, height * 0.65);
 	text("by 10 points if you touch the deadly potion.", width / 2, height * 0.7);
 
-	textSize(40);
+	textSize(55);
 	fill(253, 163, 208);
 	text("GOOD LUCK!", width / 2, height * 0.85);
 
@@ -190,23 +195,29 @@ function help(){
 function gameOver() {
 	image(background, 0, 0, 800, 800);
 
-	fill(39, 112, 230);
-	textSize(15);
-	text("Press 'Q' to go back to Main Menu.", width / 2, 700);
-
-	strokeWeight(7);
-	stroke(92, 113, 216);
-	strokeJoin(ROUND);
 	fill(92, 113, 216);
-	textSize(80);
+	textSize(100);
 	text("GAME OVER", width / 2, height / 5);
 
 	noStroke();
 	textSize(30);
 	text("Your Score: " + score, width / 2, height / 2);
-	text("You got to Level " + levels, width / 2, height * 0.6);
+	text("You got to Level " + levels, width / 2, height * 0.55);
 
 
+}
+
+function timeIsOver() {
+	image(background, 0, 0, 800, 800);
+
+	fill(92, 113, 216);
+	textSize(100);
+	text("TIME OVER", width / 2, height / 5);
+
+	noStroke();
+	textSize(30);
+	text("Your Score: " + score, width / 2, height / 2);
+	text("You got to Level " + levels, width / 2, height * 0.55);
 }
 
 function game() {
@@ -224,6 +235,7 @@ function game() {
 		if (player.collide(o)) {
 			if (o.type == "treat"){
 				score += 10;
+				numTreat++;
 				effect.push([1, o.x, o.y, true]);
 				earnScore.play();
 			}
@@ -249,14 +261,13 @@ function game() {
 	}
 
 
-
 	fill(51, 10, 4);
 	noStroke();
 	textSize(30);
 	textAlign(LEFT, CENTER);
 	text("Life: ", 25, 50);
 	for (let x = 0; x < player.health; x++){
-		image(heart, x * 30 + 85, 35, 30, 30);
+		image(heart, x * 30 + 100, 37, 30, 30);
 	}
 	text("Score: " + score, 25, 100);
 	text("Level: " + levels, 25, 150);
@@ -291,6 +302,35 @@ function game() {
 		scene = "game over";
 	}
 
+	switch(numTreat){
+		case 5:
+			levels = 2;
+			break;
+		case 10:
+			levels = 3;
+			break;
+		case 20:
+			levels = 4;
+			break;
+		case 35:
+			levels = 5;
+			break;
+		case 50:
+			levels = 6;
+			break;
+		case 75:
+			levels = 7;
+			break;
+		case 100:
+			levels = 8;
+			break;
+		case 150:
+			levels = 9;
+			break;
+		case 200:
+			levels = 10;
+			break;
+	}
 
 	counter ++;
 }
@@ -308,10 +348,10 @@ function timeAttack(){
 		/// Main behavior based on if the timer is finished.
 		if (timeOver != true) {
 			fill(0);
-			text("Time remaining: " + timeRemainingRounded, 700, 20);
+			text("Time remaining: " + timeRemainingRounded, 650, 30);
 		}
 		else {	
-			scene = "game over";
+			scene = "time over";
 		}
 	}
 
@@ -325,11 +365,9 @@ function timeAttack(){
 		o.update();
 
 		if (player.collide(o)) {
-			// if (soundOption) {
-			// 	hit.play();
-			// }
 			if (o.type == "treat"){
 				score += 10;
+				numTreat++;
 				effect.push([1, o.x, o.y, true]);
 				earnScore.play();
 			}
@@ -358,11 +396,11 @@ function timeAttack(){
 
 	fill(51, 10, 4);
 	noStroke();
-	textSize(20);
+	textSize(30);
 	textAlign(LEFT, CENTER);
 
-	text("Score: " + score, 25, 100);
-	text("Level: " + levels, 25, 125);
+	text("Score: " + score, 25, 50);
+	text("Level: " + levels, 25, 100);
 	textAlign(CENTER, CENTER);
 
 	strokeWeight(3);
@@ -386,6 +424,37 @@ function timeAttack(){
 		} else if (effect[i][0] >= 255) {
 			effect[i][3] = false;
 		}
+	}
+
+
+	switch(numTreat){
+		case 5:
+			levels = 2;
+			break;
+		case 10:
+			levels = 3;
+			break;
+		case 20:
+			levels = 4;
+			break;
+		case 35:
+			levels = 5;
+			break;
+		case 50:
+			levels = 6;
+			break;
+		case 75:
+			levels = 7;
+			break;
+		case 100:
+			levels = 8;
+			break;
+		case 150:
+			levels = 9;
+			break;
+		case 200:
+			levels = 10;
+			break;
 	}
 
 }
@@ -415,6 +484,9 @@ function draw() {
 			break;
 		case "game over":
 			gameOver();
+			break;
+		case "time over":
+			timeIsOver();
 			break;
 	}
 
