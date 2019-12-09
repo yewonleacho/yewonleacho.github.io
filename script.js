@@ -40,8 +40,6 @@ function preload() {
 	themeSong = loadSound("resources/parksandrectheme.mp3");
 	earnScore = loadSound("resources/treatyoself.mp3");
 	loseScore = loadSound("resources/moneyplease.mp3");
-	
-	// pixelFont = loadFont("resources/Endless_Boss_Battle.ttf");
 
 }
 
@@ -139,7 +137,6 @@ function overlay() {
 /* Scenes */
 function menu() {
 	image(ground, 0, 0);
-	// textFont(pixelFont);
 
 	textSize(20);
 	fill(39, 112, 230);
