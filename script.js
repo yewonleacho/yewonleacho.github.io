@@ -139,7 +139,7 @@ function overlay() {
 /* Scenes */
 function menu() {
 	image(ground, 0, 0);
-	textFont(pixelFont);
+	// textFont(pixelFont);
 
 	textSize(20);
 	fill(39, 112, 230);
