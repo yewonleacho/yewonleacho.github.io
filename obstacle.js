@@ -15,3 +15,4 @@ Obstacle.prototype.draw = function() {
 	image(this.img, this.x, this.y, this.s, this.s);
 };
 
+//done

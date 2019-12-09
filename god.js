@@ -19,3 +19,5 @@ God.prototype.draw = function() {
 	image(god, this.x, this.y, this.s, this.s);
 	imageMode(CORNER);
 };
+
+//done

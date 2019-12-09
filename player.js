@@ -40,3 +40,5 @@ Player.prototype.draw = function() {
 	image(playerImg, this.x, this.y, this.s, this.s);
 	imageMode(CORNER);
 };
+
+//done
