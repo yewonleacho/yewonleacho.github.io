@@ -7,7 +7,7 @@ function Player(x, y, s, speed) {
 
 	this.gravity = 0;
 
-	this.health = 7;
+	this.health = 3;
 }
 
 

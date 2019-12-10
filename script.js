@@ -157,8 +157,8 @@ function menu() {
 	text("Press 'P' to play background music.", 140, 30);
 
 	textSize(60);
-	text("THE SHIN ADVENTURE", width / 2, height / 3);
-	text("(1987, Atari)", width / 2, height * 0.42);
+	text("THE SHIN", width / 2, height / 3);
+	text("ADVENTURE", width / 2, height * 0.42);
 	
 	textSize(25);
 	text("Press 'H' to see the help menu.", width / 2, height * 0.8);
@@ -177,7 +177,7 @@ function help(){
 
 	textSize(20);
 	text("In regular game mode, if you touch deadly potion, you lose one life.", width / 2, height * 0.3);
-	text("You have ten lives.", width / 2, height * 0.35);
+	text("You have three lives.", width / 2, height * 0.35);
 	text("If you touch pizza, you earn 10 points.", width / 2, height * 0.4);
 	text("Earn as many as you can before the game is over.", width / 2, height * 0.45);
 
